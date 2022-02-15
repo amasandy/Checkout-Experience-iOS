@@ -1,7 +1,7 @@
 
 # Amadeus Checkout iOS SDK
 
-The Amadeus Checkout SDK for iOS makes it ease to build the payment experience of your iOS app. Use our customizable component to propose to your users all large set of method of payment.
+The Amadeus Checkout SDK for iOS makes it easy to build the payment experience of your iOS app. Use our customizable component to propose to your users a large set of methods of payment.
 
   ![](doc/img/styles.png)
 
@@ -20,8 +20,8 @@ The Amadeus Checkout SDK for iOS makes it ease to build the payment experience o
 
 ## Prerequisites
 
-You need to be registeted as a customer of the [Amadeus Payment Platform](https://amadeus.com/en/business-function/payments/xchange-payment-platform).
-Then, right before starting the checkout process, you need to retrieve a PPID from you server. To do so, your server has to call the `AMA_PAY_PreparePaymentPage`(XML) or  `POST payment/checkout-forms` (REST) webservice, with your merchant identifier, the currency and the amount to be paid. 
+You need to be registered as a customer of the [Amadeus Payment Platform](https://amadeus.com/en/business-function/payments/xchange-payment-platform).
+Then, right before starting the checkout process, you need to retrieve a `PPID` from you server. To do so, your server has to call the `AMA_PAY_PreparePaymentPage`(XML) or  `POST payment/checkout-forms` (REST) webservice, with your merchant identifier, the currency and the amount to be paid. 
 
 ## Installation
 
@@ -36,7 +36,7 @@ pod 'AmadeusCheckout/Core', :git => 'https://github.com/AmadeusITGroup/Checkout-
 Then run the following command:
 `$ pod install`
 
-If you are working on a Objective-C project, you may need to add a dummy swift file to project: `Dummy.swift`
+If you are working on an Objective-C project, you may need to add a dummy Swift file to project: `Dummy.swift`
 Xcode will ask if you want to configure an Objective-C bridging header, you can answer *Don't create*.
 
 ### Using Carthage
@@ -56,7 +56,7 @@ Head to the *Build Phases* section of your Xcode project settings, and create a 
 Paste the following snippet into the text field:
 `bash "${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/AmadeusCheckout.framework/strip-frameworks.sh"`
 
-If you are working on a Objective-C project, you may need to set *Always Embed Swift Standard Libraries* to *Yes* in your target build settings.
+If you are working on an Objective-C project, you may need to set *Always Embed Swift Standard Libraries* to *Yes* in your target build settings.
 
 ## Plugins
 
@@ -69,13 +69,13 @@ The integration depends on the used dependency manager:
 - **Cocoapods**: add the following line inside your *Podfile*
   `pod 'AmadeusCheckout/CardIOPlugin', :git => 'https://github.com/AmadeusITGroup/Checkout-Experience-iOS.git', :tag => '<version>'`
 - **Carthage**: all plugins are available in the *Carthage* build folder, just drag the ones you need on your project. Don't forget to also add the associated third party frameworks.
-- Manual (dynamic framework) : add the plugin, and the third party framework inside the *Embedded Binaries* section.
+- Manual (dynamic framework): add the plugin, and the third party framework inside the *Embedded Binaries* section.
 
 ## Usage
 
 ### Initiate payment
 
-Firstly, you need to initialize your payment context from a PPID:
+Firstly, you need to initialize your payment context from a `PPID`:
 > Swift
 ```swift
 import AmadeusCheckout
@@ -127,7 +127,7 @@ func startPayment() {
 }
 ```
 
-If you choosed the Option 2, you will also have to trigger the payment with the choosen method of payment:
+If you choose the Option 2, you will also have to trigger the payment with the chosen method of payment:
 > Swift
 ```swift
 let options = AMCheckoutOptions()
@@ -141,7 +141,7 @@ AMCheckoutOptions * options = [[AMCheckoutOptions alloc] init];
 
 ### Status callbacks
 
-The two following methods are called when the payment is successfull or failed:
+The two following methods are called when the payment is successful or failed:
 > Swift
 ```swift
 func paymentContext(_ checkoutContext: AMCheckoutContext, didFinishWithStatus status: AMPaymentStatus, error: Error?) {
@@ -157,37 +157,37 @@ func paymentContext(_ checkoutContext: AMCheckoutContext, didFinishWithStatus st
 }
 ```
 In case of error sent back to your application, the SDK has closed for the current `ppid`. 
-Depending on the error type and the payment status explained below, you will either have to check the status by a server to server call or you can restart the SDK using the same ppid in case of canceled payment.
+Depending on the error type and the payment status explained below, you will either have to check the status by a server to server call or you can restart the SDK using the same `PPID` in case of cancelled payment.
 
-Types :
+Types:
 
 - `AMPaymentStatus` is an `enum`:
-    - `success`: the checkout was successful, you can now check the payment status from your server 
-    - `failure`: the checkout failed
-    - `unknown`: the checkout status is unknown, you have to check the payment status from your server
-    - `cancellation`: the checkout was cancelled by the user
+    - `success`: checkout was successful, you can now retrieve the payment status from your server.
+    - `failure`: checkout failed.
+    - `unknown`: checkout status is unknown, you have to retrieve the payment status from your server.
+    - `cancellation`: checkout was cancelled by the user.
 
-- error is of `CheckoutError` class and contains :
+- error is of `CheckoutError` class and contains:
     - `type`: of `AMErrorType`
     - `feature`: of `AMErrorFeature`
 
 - `AMErrorType` is an `enum`:
-    - `networkFailure`: the SDK can't reach the server due a network/timeout problem
-    - `unexpectedError`: An unexpected error has occured, you need to check the payment status from your server
-    - `paymentError`: The payment has been rejected at authorization time
-    - `sessionTimeout`: The `ppid` has expired and can't be used anymore
+    - `networkFailure`: the SDK can't reach the server due to a network/timeout problem.
+    - `unexpectedError`: An unexpected error occurred, you need to check the payment status from your server.
+    - `paymentError`: The payment has been rejected at authorization time.
+    - `sessionTimeout`: The `PPID` has expired and can't be used anymore.
 
 - `AMErrorFeature` is an `enum`:
-    - `loadMethodOfPayments` : error occured at load time
-    - `addCreditCard` : error occured at the step of payment with card
-    - `addAlternativeMethodOfPayment` : error occured at the step of payment with alteranative method of payment.
-    - `verifyAfterRedirection` : error occured after 3DS or authentication for alteranative method of payment.
-    - `webViewRedirection` : error occured at redirection time (3DS or authentication)
-    - `binValidation` : error occured at bin check for card number.
-    - `obFeesComputation` : error occured at fees computation time for card number
-    - `none` : error occured and no action was performed
+    - `loadMethodOfPayments`: error occurred at load time.
+    - `addCreditCard`: error occured at the step of payment with card.
+    - `addAlternativeMethodOfPayment`: error occurred at the step of payment with alternative method of payment.
+    - `verifyAfterRedirection`: error occurred after 3DS or authentication for alternative method of payment.
+    - `webViewRedirection`: error occurred at redirection time (3DS or authentication).
+    - `binValidation`: error occurred during BIN check for card number.
+    - `obFeesComputation`: error occurred at fees computation time for card number.
+    - `none`: error occurred and no action was performed.
 
-Once the payment has been completed or the SDK closed due to some error, perform a server to server call with the message `AMA_PAY_GetPaymentStatus` (XML) or `GET payment/checkout-forms/{PPID}` (REST) to get the status of the authorisation and other information about it.
+Once the payment has been completed or the SDK closed due to some error, please perform a server to server call with the message `AMA_PAY_GetPaymentStatus` (XML) or `GET payment/checkout-forms/{PPID}` (REST) to get the status of the authorization and other information about it.
 
 ### Customization
 
@@ -197,7 +197,7 @@ You can configure the appearance, by setting the following properties on the `AM
 |Name|Type|Description|
 |---|---|---|
 | `primaryBackgroundColor` | `UIColor` | Background color used for the payment card form |
-| `secondaryBackgroundColor` | `UIColor` | Background color used for navigations bar and form groups |
+| `secondaryBackgroundColor` | `UIColor` | Background color used for navigation bars and form groups |
 | `primaryForegroundColor` | `UIColor` | Color of labels and navigation bar title |
 | `secondaryForegroundColor` | `UIColor` | Color for input placeholders |
 | `accentColor` | `UIColor` | Color for navigation bar buttons, icons and input |
@@ -210,7 +210,7 @@ You can configure the appearance, by setting the following properties on the `AM
 
 |Name|Type|Description|
 |---|---|---|
-| `termsAndConditions` | `Array` of `AMTermsAndConditions` | List of terms and conditions URLs. If at least one is provided, the user will have to tick a terms & conditions checkbox (for payment cards only). If you provide several links, user will be able to open them one by one, in that case please provide a relevant label for each link. |
+| `termsAndConditions` | `Array` of `AMTermsAndConditions` | List of terms and conditions URLs. If at least one is provided, the user will have to tick a Terms & Conditions checkbox (for payment cards only). If you provide several links, user will be able to open them one by one, in that case please provide a relevant label for each link. |
 | `bookingDetails` | `AMBookingDetails` | List of passengers and/or flights, to be displayed on Credit Card form. If no passenger list or flight list is provided, the corresponding section won't be displayed. |
 | `amountBreakdown` | `Array` of `AMAmountDetails` | List of amounts and labels to display in the amount breakdown pop-up. If provided list is empty, and no payment fee applies, the amount breakdown feature is automatically disabled.  |
 | `displayPayButtonOnTop` | `Boolean` | Also display the pay button inside the navigation bar.  |
@@ -223,7 +223,7 @@ You can configure the appearance, by setting the following properties on the `AM
 #### Localization
 The SDK comes with a full set of localizations, in various languages. Nonetheless, any label visible on screen can be modified.
 
-Calls the `AMCheckoutLabels.overrideLocalizableString` function, before context initialization, for all labels that need to be customized.
+Call the `AMCheckoutLabels.overrideLocalizableString` function, before context initialization, for all labels that need to be customized.
 The full list of customizable labels is available in [the following file](./AmadeusCheckoutCore/AmadeusCheckout/Resources/en.lproj/Localizable.strings).
 
 >Swift
@@ -236,14 +236,14 @@ AMCheckoutLabels.overrideLocalizableString("label_loading", withValue: "Please w
 ```
 
 #### Callback Scheme
-If your setup includes an alternative method of payment that may redirect to a third party application or website, you have to set-up a callback scheme.
+If your setup includes an alternative method of payment that may redirect to a third party application or website, you have to setup a callback scheme.
 This scheme will be used to go back to your application when the external action is done.
 
 You have to choose a scheme that is unique for your application, so that you are sure that it's not used by any other application.
 For the following examples, we will use ```my-custom-scheme``` as scheme, **please don't forget to replace this value with yours**. 
 
 ##### a. Declare the custom scheme in your `Info.plist`
-This setup will make your application able to open links in the following format: ```my-custom-scheme://...``` .
+This setup allows your application to open links in the following format: ```my-custom-scheme://...``` .
 
 
 ```xml

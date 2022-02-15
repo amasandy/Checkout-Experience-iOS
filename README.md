@@ -156,7 +156,7 @@ func paymentContext(_ checkoutContext: AMCheckoutContext, didFinishWithStatus st
     // Handle the success here
 }
 ```
-In case of error sent back to your application, the SDK has closed for the current `ppid`. 
+In case of error sent back to your application, the SDK has closed for the current `PPID`. 
 Depending on the error type and the payment status explained below, you will either have to check the status by a server to server call or you can restart the SDK using the same `PPID` in case of cancelled payment.
 
 Types:
